@@ -1,0 +1,14 @@
+.card-white {
+    border-radius: 25px;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    padding: 20px 25px;
+    width:400px;
+    margin-bottom: 50px;
+}
+.list-element li {
+    font-weight: 400;
+    font-size: 23px;
+}
+.container {
+    width: 800px;
+}
