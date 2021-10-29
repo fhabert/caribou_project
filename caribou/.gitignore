@@ -1,1 +1,2 @@
-*.js
+/static/*.js
+/static/meteo_api.js
