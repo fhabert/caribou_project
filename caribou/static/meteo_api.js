@@ -13,12 +13,12 @@ btnSubmit.addEventListener('click', (event) => {
 })
 
 const createCard = (infos) => {
-    console.log(infos);
+    const temp = Math.round(infos.main.temp - 273);
     const city = infos.name;
     const cardDiv = document.getElementById("card-weather");
     cardDiv.insertAdjacentHTML("beforeend", `<div class="card-white"><h3> ${city} <h3> \
         <ul class="list-element"> <li> <p>Description: ${infos.weather[0].description} </p></li> \
-        <li> <p>Type: ${infos.weather[0].main} </p></li> <li> <p>Temp: ${infos.main.temp}K </p></li></ul></div>`);
+        <li> <p>Type: ${infos.weather[0].main} </p></li> <li> <p>Temp: ${temp}°C </p></li></ul></div>`);
     const ctx = document.getElementById('myChart').getContext('2d');
     const data = {
         labels: ["temp_min", "temp_max"],
@@ -41,19 +41,20 @@ const createCard = (infos) => {
         type: "bar",
         data: data,
         options: {
-            // scales: {
-            //   y: {
-            //     beginAtZero: true
-            //   }
-            // },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
             layout: {
                 padding: {
-                    left: 600,
-                    right: 600, 
-                    bottom:700,
+                    left: 300,
+                    right: 300, 
+                    bottom:0,
                     top: 0
                 }
-            }
+            },
+            maintainAspectRatio: false        
         }
     });
 }
