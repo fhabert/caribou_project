@@ -17,6 +17,10 @@ def individuals():
 def interval():
     return render_template('map_interval.html')
 
+@app.route('/prediction', methods=['GET'])
+def prediction():
+    return render_template('prediction.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 

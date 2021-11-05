@@ -19,12 +19,17 @@ individual_good = individuals_w_start[data_indi["deploy_off_longitude"].notnull(
 deers_id = individual_good["animal_id"]
 
 datasets = []
+counter = 0
 for name in deers_id:
     temp_dataset = data_loca[data_loca["animal_id"] == name]
-    if len(temp_dataset) > 700:
+    temp_dataset['timestamp'] = pd.to_datetime(temp_dataset['timestamp'])
+    data_sorted = temp_dataset.sort_values(by="timestamp")
+    if len(temp_dataset) > 680:   #to get specificaly 20 caribou for the length of colors
+        counter += 1
         datasets.append(temp_dataset.head())
         datasets.append(temp_dataset.tail())
 
+# print(counter)
 
 def get_mean_long_lat(start_date, end_date):
     movement = data_loca[data_loca["timestamp"].between(start_date, end_date)]
@@ -64,7 +69,6 @@ for item in datasets:
     list_deer_x.append(item["latitude"])
     list_deer_y.append(item["longitude"])
 
-# get_map(list_deer_x, list_deer_y)
+get_map(list_deer_x, list_deer_y)
 # data_mean_x, data_mean_y = get_x_y(pos_01_08)
-# iframe = fo.IFrame("hello", width=30, height=20)
-# popup = fo.Popup(iframe, max_width=30)
+

@@ -1,9 +1,9 @@
+const apiKey = "f498092d718b8fc958f0dec434d0e7bf";
 const btnSubmit = document.getElementById('btn-submit');
 
 btnSubmit.addEventListener('click', (event) => {
     const lat = document.getElementById('latitude-input').value;
     const long = document.getElementById('longitude-input').value;
-    // const apiUrl = `http://history.openweathermap.org/data/2.5/history/city?lat={${lat}}&lon={${long}}&type=hour&start={${start}}&end={${end}}&appid={${apiKey}}`;
     const api = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}`;
     fetch(api)
         .then(response => response.json())
