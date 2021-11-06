@@ -1,4 +1,3 @@
-const apiKey = "f498092d718b8fc958f0dec434d0e7bf";
 const btnSubmit = document.getElementById('btn-submit');
 
 btnSubmit.addEventListener('click', (event) => {
