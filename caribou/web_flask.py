@@ -21,6 +21,14 @@ def interval():
 def prediction():
     return render_template('prediction.html')
 
+@app.route('/group', methods=['GET'])
+def group():
+    return render_template('group_study.html')
+
+@app.route('/chloro', methods=['GET'])
+def chloro():
+    return render_template('chloro.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 

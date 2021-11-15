@@ -6,6 +6,8 @@ import pandas as pd
 import math
 import requests
 import json
+import statsmodels.api as sms
+
 
 loca = main.data_loca
 points_2001 = loca[loca["timestamp"].str.match(r'2001.*') == True]
@@ -56,8 +58,13 @@ def get_map_interval(dataset):
 def get_distance_mean(years):
     dis_years = []
     distance_calculated = []
+    dis_years_separated = []
     for i in range(len(years)-2):
         sample = loca[loca['timestamp'].between(str(years[i]), str(years[i + 2]))]
+        sample_winter = sample[sample["season"] == "Winter"]
+        sample_summer = sample[sample["season"] == "Summer"]
+        dis_years_separated.append([round(sample_winter['longitude'].mean(), 5), round(sample_winter['latitude'].mean(), 5)])
+        dis_years_separated.append([round(sample_summer['longitude'].mean(), 5), round(sample_summer['latitude'].mean(), 5)])
         mean_long = round(sample['longitude'].mean(), 5)
         mean_lat = round(sample['latitude'].mean(), 5)
         dis_years.append([mean_long, mean_lat])
@@ -66,7 +73,7 @@ def get_distance_mean(years):
         distance_calculated.append(dis)
     dis = euclidean_distance(dis_years[-2], dis_years[-1])
     distance_calculated.append(dis)
-    return dis_years, distance_calculated
+    return dis_years, distance_calculated, dis_years_separated
 
 def bar_plot(distances, years):
     plt.bar(years, distances)
@@ -79,7 +86,7 @@ def scatter_plot(data_x, data_y, xlabel, ylabel):
     plt.scatter(data_x, data_y)
     plt.xlabel(f'{xlabel}')
     plt.ylabel(f'{ylabel}')
-    plt.title(f'{xlabel} in relation to the {ylabel}')
+    plt.title(f'Analysis of the amount of relative distance traveled between each years')
     plt.show()
 
 def log_data(distances, temp):
@@ -100,16 +107,55 @@ def get_altitudes(lati_longi):
         headers = {"method":'GET'}
         response = requests.request("GET", url, headers=headers)
         response_json = json.loads(response.content)
-        altitudes.append(response_json["results"][0]["elevation"])
+        elevation = response_json["results"][0]["elevation"]
+        altitudes.append(elevation)
     return altitudes
 
 
-lat_long, dis_means = get_distance_mean(temp_years)
-# bar_plot(dis_means, years_appart)
+def get_altitudes_season(lati_longi):
+    apiKey = "AIzaSyAgz3mB09smlngG2H6psWClIobJZgXxEPA"
+    altitudes_winter = []
+    altitudes_summer = []
+    for i in range(len(lati_longi)):
+        url = f"https://maps.googleapis.com/maps/api/elevation/json?locations={lati_longi[i][1]}%2C{lati_longi[i][0]}&key={apiKey}"
+        headers = {"method":'GET'}
+        response = requests.request("GET", url, headers=headers)
+        response_json = json.loads(response.content)
+        elevation = response_json["results"][0]["elevation"]
+        if i % 2 == 0:
+            altitudes_winter.append(elevation)
+        else:
+            altitudes_summer.append(elevation)
+    return altitudes_winter, altitudes_summer
+
+# lat_long, dis_means, lat_long_season = get_distance_mean(temp_years)
+# scatter_plot(years_appart, dis_means, "Years Apart", "Relative distance")
 # temp_means = get_temp_mean(temp_years)
+# print(lat_long_season)
 # scatter_plot(temp_means, temp_years[:-1], 'Temperature', 'Years Apart')
 # dis_ln, temp_ln = log_data(dis_means, temp_means)
-# dis_wt_temp(dis_means, temp_means)
+# scatter_plot(dis_means, temp_means[:-1], 'Relative distance', 'Temperature (°C)')
 # get_map_interval(deers_pos)
 # altitudes_points = get_altitudes(lat_long)
-# scatter_plot(years_appart, altitudes_points, "Years Apart", "Altitude")
+# altitudes_winter, altitudes_summer = get_altitudes_season(lat_long_season)
+# plt.clf()
+# plt.scatter(years_appart, altitudes_summer, color="b", label='summer', alpha=0.7)
+# plt.scatter(years_appart, altitudes_winter, color="orange", label='winter', alpha=0.7)
+# plt.legend(loc='lower left')
+# plt.xlabel("Years")
+# plt.ylabel("ALtitude of the fields (m)")
+# plt.title("The influence of the seasons on the field altitude of the deer")
+# plt.show()
+
+print(temperatures.describe())
+
+# def get_description_regression(data_x, data_y):
+#     X_values = sms.add_constant(dis_means)
+#     regression_model_a = sms.OLS(temp_means[:-1], X_values)
+#     regression_model_b = regression_model_a.fit()
+#     print(regression_model_b.summary())
+#     print("gradient  =", regression_model_b.params[1])
+#     print("intercept =", regression_model_b.params[0])
+#     print("Rsquared  =", regression_model_b.rsquared)
+#     print("MSE       =", regression_model_b.mse_resid)
+#     print("pvalue    =", regression_model_b.f_pvalue)
