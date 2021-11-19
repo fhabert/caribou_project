@@ -102,8 +102,8 @@ for item in datasets:
 # titles = group.study_site.tolist()
 # get_map_all(titles)
 
-get_map(list_deer_x, list_deer_y)
+# get_map(list_deer_x, list_deer_y)
 # data_mean_x, data_mean_y = get_x_y(pos_01_08)
 
-# presentation()
+presentation()
 # print(locations.columns.tolist(), individuals.columns.tolist(), temperatures.columns.tolist())
