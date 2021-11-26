@@ -25,9 +25,9 @@ def prediction():
 def group():
     return render_template('group_study.html')
 
-@app.route('/chloro', methods=['GET'])
-def chloro():
-    return render_template('chloro.html')
+@app.route('/spread', methods=['GET'])
+def spread():
+    return render_template('points_spread.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
