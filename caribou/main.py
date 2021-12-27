@@ -35,15 +35,6 @@ for name in deers_id:
         datasets.append(temp_dataset.head())
         datasets.append(temp_dataset.tail())
 
-# maximum = dates[0][1] - dates[0][0]
-# index = 0
-# for i in range(len(dates)):
-#     if (dates[i][1] - dates[i][0]) > maximum:
-#         maximum = dates[i][1] - dates[i][0]
-#         index = i
-# deers_id_list = deers_id.tolist()
-# print(dates[index], index)
-
 def get_mean_long_lat(start_date, end_date):
     movement = data_loca[data_loca["timestamp"].between(start_date, end_date)]
     mean_lat = movement.latitude.mean()
@@ -105,5 +96,5 @@ for item in datasets:
 # get_map(list_deer_x, list_deer_y)
 # data_mean_x, data_mean_y = get_x_y(pos_01_08)
 
-presentation()
+# presentation()
 # print(locations.columns.tolist(), individuals.columns.tolist(), temperatures.columns.tolist())

@@ -29,6 +29,14 @@ def group():
 def spread():
     return render_template('points_spread.html')
 
+@app.route('/chloro', methods=['GET'])
+def chloro():
+    return render_template('chloro.html')
+
+@app.route('/compare', methods=['GET'])
+def compare():
+    return render_template('compare.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
 

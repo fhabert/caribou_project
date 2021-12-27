@@ -1,18 +1,21 @@
 import pandas as pd
 import folium
+import random
 
-url = (
-    "https://raw.githubusercontent.com/python-visualization/folium/master/examples/data"
-)
-state_geo = f"{url}/us-states.json"
-state_unemployment = f"{url}/US_Unemployment_Oct2012.csv"
-state_data = pd.read_csv(state_unemployment)
+
+data = "./datasets/canada_pos.csv"
+state_data = pd.read_csv(data, encoding = 'unicode_escape', sep=";")
+df = pd.DataFrame(state_data)
+df_state = state_data[['Geographic name, english', 'Geographic code', 'Provincial / territory abbreviation, english']]
+array_defo = [random.randint(0, 500) for _ in range(len(df))]
+df_state["Deforestation"] = array_defo
+df_state = df_state.rename(columns={"Geographic name, english": "Name"})
 m = folium.Map(location=[48, -102], zoom_start=3)
 
 folium.Choropleth(
-    geo_data=state_geo,
+    geo_data=array_defo,
     name="choropleth",
-    data=state_data,
+    data=array_defo,
     columns=["State", "Unemployment"],
     key_on="feature.id",
     fill_color="YlGn",
@@ -22,4 +25,4 @@ folium.Choropleth(
 ).add_to(m)
 
 folium.LayerControl().add_to(m)
-# m.save("./templates/chloro.html")
+m.save("./templates/chloro.html")
