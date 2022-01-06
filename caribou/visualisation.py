@@ -105,7 +105,6 @@ def log_data(distances, temp):
 
 
 def get_altitudes(lati_longi):
-    apiKey = "AIzaSyAgz3mB09smlngG2H6psWClIobJZgXxEPA"
     altitudes = []
     for item in lati_longi:
         url = f"https://maps.googleapis.com/maps/api/elevation/json?locations={item[1]}%2C{item[0]}&key={apiKey}"
@@ -118,7 +117,6 @@ def get_altitudes(lati_longi):
 
 
 def get_altitudes_season(lati_longi):
-    apiKey = "AIzaSyAgz3mB09smlngG2H6psWClIobJZgXxEPA"
     altitudes_winter = []
     altitudes_summer = []
     for i in range(len(lati_longi)):

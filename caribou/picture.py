@@ -20,9 +20,9 @@ for i in range(first_dif):
     array[rand_r][rand_c] = np.array(red)
     counter += 1
     if counter < 250:
+        array[counter][58] = black
+        array[counter][59] = black
         array[counter][60] = black
-        array[counter][61] = black
-        array[counter][62] = black
 
 counter = 0
 for i in range(number_diff):
@@ -36,5 +36,5 @@ for i in range(number_diff):
         array[counter][122] = black
 
 img = Image.fromarray(array, "RGB")
-img.save('./images/pov.png')
+# img.save('./images/pov.png')
 img.show()

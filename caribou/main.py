@@ -63,10 +63,7 @@ def get_map(data_x, data_y):
         if i % 2 == 0:
             ordi = random.randint(0, len(colors) - 1)
         for j in range(len(data_x[i])):
-            if i == 10:
-                deers.add_child(fo.Marker(location=[data_x[i].iloc[j], data_y[i].iloc[j]], icon=fo.Icon(color='red')))
-            else:
-                deers.add_child(fo.Marker(location=[data_x[i].iloc[j], data_y[i].iloc[j]], icon=fo.Icon(color=colors[ordi])))
+            deers.add_child(fo.Marker(location=[data_x[i].iloc[j], data_y[i].iloc[j]], icon=fo.Icon(color=colors[ordi]), popup=f"{year},{deers.iloc[j][0]}".fo))
     map_deers = fo.Map().add_child(deers)
     map_deers.save("./templates/my_map.html")
 

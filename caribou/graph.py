@@ -3,10 +3,9 @@ import math
 data = {
     "Weedon Carp 60": (54.794444, -123.086667),
     "Burnt pine": (56.428210, -120.699450),
-    "Quintette": (55.133333, -121),
     "Predicted Pos": (55.67599332, -122.71791481),
     "Moberly": (55.82300, -121.76200),
-    "Hart Ranges": (54.15934, -120.891824),
+    "Hart Ranges": (54.727583180778744, -122.09576522819326),
     "Monkman Provincial Park": (54.54778, -121,17227),
     "Sentinel Peak": (54.908111, -121.961111),
     "Gwillam Lake Provincial Park": (55,421738, -121,279839)
@@ -85,8 +84,7 @@ n_vertices = len(places_name)
 graph = Graph(n_vertices, places_name, nodes)
 for i in range(len(nodes)):
     for j in range(len(nodes)):
-        if id(nodes[i]) != id(nodes[j]):
-            graph.add_edges(nodes[i], nodes[j])
+        graph.add_edges(nodes[i], nodes[j])
 
 distances = []
 for i in range(len(places_name)):
@@ -94,8 +92,9 @@ for i in range(len(places_name)):
         dis = graph.get_value(start, i)
         dis += graph.get_value(i, destination)
         distances.append((round(dis, 2), nodes[i]))
+# print(distances)
+# print(graph.n_edges[start][destination])
 
-print(graph.n_edges[start][destination])
-print(distances)
+# print(distances)
 print(get_min_dis(distances))
 # graph.to_string()

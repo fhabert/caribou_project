@@ -16,7 +16,7 @@ data_loca = pd.DataFrame(locations)
 
 sample = locations.iloc[:15000]
 deer_spread = {}
-years = [x for x in range(2001, 2015)]
+years = [x for x in range(2001, 2014)]
 spread_value = []
 
 deers_spread = fo.Map(name="DeerSpread")
@@ -52,20 +52,22 @@ for year in years:
             whole_mean = sum(distances_sum) / len(distances_sum)
             deer_spread[year] = whole_mean
     counter += 1
-deers_spread.save("./templates/points_spread.html")
+# deers_spread.save("./templates/points_spread.html")
 
-# def get_spread_graph():
-#     for _, value in deer_spread.items():
-#         spread_value.append(value)
+def get_spread_graph():
+    for _, value in deer_spread.items():
+        spread_value.append(value)
+    print(len(years), len(spread_value))
+    np_years = np.array(years)
+    np_spread = np.array(spread_value)
+    X_Y_Spline = make_interp_spline(np_years, np_spread)
+    X_Final = np.linspace(2001, 2015, 500)
+    Y_Final = X_Y_Spline(X_Final)
 
-#     np_years = np.array(years)
-#     np_spread = np.array(spread_value)
-#     X_Y_Spline = make_interp_spline(np_years, np_spread)
-#     X_Final = np.linspace(2001, 2014, 500)
-#     Y_Final = X_Y_Spline(X_Final)
+    plt.plot(X_Final, Y_Final, color="orange", alpha=0.7)
+    plt.xlabel("Years")
+    plt.ylabel("Spread relative value")
+    plt.title("Understanding the inner spread of the herd between each year")
+    plt.show()
 
-#     plt.plot(X_Final, Y_Final, color="orange", alpha=0.7)
-#     plt.xlabel("Years")
-#     plt.ylabel("Spread relative value")
-#     plt.title("Understanding the inner spread of the herd between each year")
-#     plt.show()
+get_spread_graph()

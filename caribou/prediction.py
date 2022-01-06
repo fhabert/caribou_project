@@ -47,7 +47,6 @@ def get_map_predict(fp, lp, pp):
     map_deers.save("./templates/prediction.html")
 
 def get_altitudes(lati_longi):
-    apiKey = "AIzaSyAgz3mB09smlngG2H6psWClIobJZgXxEPA"
     url = f"https://maps.googleapis.com/maps/api/elevation/json?locations={lati_longi[1]}%2C{lati_longi[0]}&key={apiKey}"
     headers = {"method":'GET'}
     response = requests.request("GET", url, headers=headers)

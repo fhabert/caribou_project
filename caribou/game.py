@@ -15,7 +15,7 @@ playground = pg.image.load('images/black_bg.jpg')
 
 class Game:
     def __init__(self, num_flock):
-        self.nb_dots = 5
+        self.nb_dots = 3
         self.dots = self.init_dots()
         self.num_flock = num_flock
         self.flocks = self.init_flock()
@@ -24,8 +24,13 @@ class Game:
     def init_dots(self):
         ar = []
         for _ in range(self.nb_dots):
+            # num = random.randint(0, 2)
+            # if num == 0:
             pos_x = random.randint(0, 600)
             pos_y = random.randint(0, 600)
+            # else:
+            #     pos_x = random.randint(0, 300)
+            #     pos_y = random.randint(500, 600)
             dot = Dot(pos_x, pos_y)
             ar.append(dot)
         return ar
@@ -152,9 +157,9 @@ class Flock:
             if collide:
                 rand = random.randint(0, 10)
                 if rand >= 5:
-                    self.position = np.add(self.position, np.array([-0.05, 0.08]))
+                    self.position = np.add(self.position, np.array([0.05, 0.08]))
                 else:
-                    self.position = np.add(self.position, np.array([-0.05, -0.08]))
+                    self.position = np.add(self.position, np.array([0.05, -0.08]))
     
     def mag(self, vector):
         return math.sqrt(vector[0] ** 2 + vector[1] ** 2)
